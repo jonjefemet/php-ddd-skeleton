@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace SkeletonDDD\Apps\Backoffice\Backend\Controller\Auth;
 
-
-use Respect\Validation\ChainedValidator;
 use Respect\Validation\Validator as v;
 use SkeletonDDD\Apps\Shared\Backend\ApiController;
 use SkeletonDDD\Context\Backoffice\Auth\Application\Authenticate\AuthenticateUserCommand;
