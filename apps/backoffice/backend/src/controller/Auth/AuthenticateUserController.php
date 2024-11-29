@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace SkeletonDDD\Apps\Backoffice\Backend\Controller\Auth;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+
+use Respect\Validation\ChainedValidator;
+use Respect\Validation\Validator as v;
+use SkeletonDDD\Apps\Shared\Backend\ApiController;
 use SkeletonDDD\Context\Backoffice\Auth\Application\Authenticate\AuthenticateUserCommand;
 use SkeletonDDD\Context\Shared\Domain\Bus\Command\CommandBus;
+use Slim\Psr7\Request;
+use Slim\Psr7\Response;
 
-final class AuthenticateUserController
+final class AuthenticateUserController extends ApiController
 {
 
 
@@ -17,9 +21,16 @@ final class AuthenticateUserController
         private CommandBus $commandBus
     ) {}
 
-    public function __invoke(Request $request, Response $response): Response
+    protected function getSchema()
     {
+        return
+            v::arrayType()
+            ->key('username', v::stringType()->notEmpty())
+            ->key('password', v::stringType()->notEmpty());
+    }
 
+    protected function doAction(Request $request, Response $response): Response
+    {
         $data = $request->getParsedBody();
 
         $username = $data['username'];
