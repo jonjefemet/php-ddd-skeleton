@@ -1,1 +1,0 @@
-# php-ddd-skeleton
